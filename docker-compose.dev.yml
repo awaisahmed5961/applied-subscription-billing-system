@@ -11,12 +11,7 @@ services:
     volumes:
       - ./initdb.sql:/docker-entrypoint-initdb.d/create_tables.sql
       - ./postgres-data:/var/lib/postgresql/data
-  shared-lib-builder:
-    image: node:20-alpine
-    working_dir: /app
-    command: sh -c "npm install -g pnpm && pnpm install && pnpm --filter @project/auth-lib build"
-    volumes:
-      - .:/app
+
   payment-service:
     build:
       context: .
@@ -28,7 +23,6 @@ services:
     command: pnpm start:dev
     depends_on:
       - postgres
-      - shared-lib-builder
 
   subscription-service:
     build:
@@ -41,5 +35,4 @@ services:
     command: pnpm start:dev
     depends_on:
       - postgres
-      - shared-lib-builder
 

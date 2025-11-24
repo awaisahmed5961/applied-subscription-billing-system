@@ -24,4 +24,6 @@ WORKDIR /app/services/subscription-service
 
 RUN pnpm install --filter subscription-service...
 
+RUN pnpm --filter @project/auth-lib... build
+
 CMD ["pnpm", "start:dev"]
