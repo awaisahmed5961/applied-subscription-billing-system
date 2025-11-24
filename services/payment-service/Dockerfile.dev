@@ -23,4 +23,6 @@ WORKDIR /app/services/payment-service
 
 RUN pnpm install --filter payment-service...
 
+RUN pnpm --filter @project/auth-lib... build
+
 CMD ["pnpm", "start:dev"]
