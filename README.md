@@ -328,6 +328,25 @@ PAYMENT_SHARED_SECRET=hmac_6Aq9Zt3Lp8Xw2Vn5Cr1Jg7Yp0Ks4Df8Mh2Rb6Uc9Ei3Qo7Tw1Zn5H
 
 ---
 
+
+## Testing
+
+```bash
+
+pnpm run test:all,
+
+pnpm run test:subscription
+
+pnpm run  test:payment
+    
+```
+
+
+Tests use **Jest** and **Supertest** for comprehensive coverage.
+
+---
+
+
 ## 💡 Design Principles
 
 - **Stateless HTTP Communication** - Services are independently scalable

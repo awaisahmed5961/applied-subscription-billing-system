@@ -10,6 +10,12 @@
     "dev:payment": "pnpm --filter payment-service start:dev",
     "build:auth-lib": "pnpm --filter @project/auth-lib build",
     "dev:all": "pnpm --parallel --filter \"./services/*\" start:dev",
+
+    "test:subscription": "pnpm --filter subscription-service test",
+    "test:payment": "pnpm --filter payment-service test",
+    "test:all": "pnpm --parallel --filter payment-service --filter subscription-service test",
+
+    
     "format": "pnpm prettier --write ."
   },
   "devDependencies": {
