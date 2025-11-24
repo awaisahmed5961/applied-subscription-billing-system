@@ -1,0 +1,65 @@
+node_modules/
+
+# Build output (TypeScript compiled files)
+dist/
+build/
+lib/
+out/
+
+# Nest CLI cache
+.nestcli-cache/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Temporary files
+tmp/
+temp/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Coverage from Jest
+coverage/
+coverage-final.json
+.nyc_output/
+
+# Environment variables (sensitive)
+.env
+.env.*
+!.env.example
+
+# IDE / Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.orig
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Package manager lock files (optional based on system)
+# Uncomment if monorepo uses a different lock file
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Local build scripts or metadata
+*.local.js
+*.local.ts
+
+# Test artifacts
+test-results/
+jest-cache/
+.jest/
+
+# Lerna / NX / Monorepo related (if applicable)
+lerna-debug.log
+.nx/

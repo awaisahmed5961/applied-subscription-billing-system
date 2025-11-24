@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: appliedAi-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./initdb.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./postgres-data:/var/lib/postgresql/data
+  shared-lib-builder:
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "npm install -g pnpm && pnpm install && pnpm --filter @project/auth-lib build"
+    volumes:
+      - .:/app
+  payment-service:
+    build:
+      context: .
+      dockerfile: services/payment-service/Dockerfile.dev
+    volumes:
+      - ./services/payment-service/src:/app/services/payment-service/src
+    ports:
+      - "3001:3001"
+    command: pnpm start:dev
+    depends_on:
+      - postgres
+      - shared-lib-builder
+
+  subscription-service:
+    build:
+      context: .
+      dockerfile: services/subscription-service/Dockerfile.dev
+    volumes:
+      - ./services/subscription-service/src:/app/services/subscription-service/src
+    ports:
+      - "3000:3000"
+    command: pnpm start:dev
+    depends_on:
+      - postgres
+      - shared-lib-builder
+
