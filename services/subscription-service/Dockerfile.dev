@@ -1,0 +1,27 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+RUN corepack enable
+
+# Make pnpm work in Docker (non-interactive env)
+ENV CI=true
+
+# copy root workspace files
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+
+# copy the whole monorepo (so PNPM can resolve workspaces)
+COPY . .
+
+
+# Copy env into the correct service directory (not root)
+COPY services/subscription-service/.env.example services/subscription-service/.env
+
+
+# go to service folder and install only that service
+WORKDIR /app/services/subscription-service
+
+
+RUN pnpm install --filter subscription-service...
+
+CMD ["pnpm", "start:dev"]

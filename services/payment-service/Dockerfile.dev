@@ -1,0 +1,26 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+RUN corepack enable
+
+# Make pnpm work in Docker (non-interactive env)
+ENV CI=true
+
+# copy root workspace files
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+
+
+
+# copy the whole monorepo (so PNPM can resolve workspaces)
+COPY . .
+
+# Copy env into the correct service directory (not root)
+COPY services/payment-service/.env.example services/payment-service/.env
+
+# go to service folder and install only that service
+WORKDIR /app/services/payment-service
+
+RUN pnpm install --filter payment-service...
+
+CMD ["pnpm", "start:dev"]

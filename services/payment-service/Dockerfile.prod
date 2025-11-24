@@ -1,0 +1,43 @@
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+RUN corepack enable
+ENV CI=true
+
+# Copy root dependency files
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+
+# Copy full monorepo
+COPY . .
+
+# Move into service directory
+WORKDIR /app/services/payment-service
+
+# Install ONLY this service's dependencies (INCLUDING dev deps)
+RUN pnpm install --filter payment-service...
+
+# Build service (Nest CLI is now available locally)
+RUN pnpm exec nest build
+
+
+# ---- Production image ----
+FROM node:20-alpine
+
+WORKDIR /app
+
+RUN corepack enable
+ENV CI=true
+
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY . .
+
+WORKDIR /app/services/payment-service
+
+# Install only prod deps for this service
+RUN pnpm install --prod --filter payment-service...
+
+# Copy compiled dist
+COPY --from=builder /app/services/payment-service/dist ./dist
+
+CMD ["node", "dist/main.js"]

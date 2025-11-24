@@ -1,0 +1,49 @@
+# Node
+node_modules/
+.pnp.cjs
+.pnp.loader.mjs
+
+# Build output
+dist/
+build/
+lib/
+out/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Coverage / Tests
+coverage/
+.nyc_output/
+.jest/
+jest-cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Turborepo cache
+.turbo/
+
+# NestJS cache
+.nestcli-cache/
+
+# Typescript build info
+*.tsbuildinfo
+
+# Local scripts
+*.local.js
+*.local.ts
